@@ -1,6 +1,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <stdio.h>
 #include "pdfs.hh"
 
 // -----------------------------------------------------------------------------
@@ -92,6 +93,17 @@ pdf_gamma( double x, double* params )
   return val;
 }
 
-
-
-
+// -----------------------------------------------------------------------------
+// Maxwell-Boltzman PDF
+// -----------------------------------------------------------------------------
+double 
+pdf_maxwell_boltzmann( double y, double* params ) 
+// -----------------------------------------------------------------------------
+{ 
+  double a = params[0];
+  double ct = sqrt((double)2 / M_PI);
+  double exp_term = exp(-(y * y) / (2 * a * a));
+  double den = a * a * a;
+  double ret = ct * y * y * exp_term / den;
+  return ret;
+}

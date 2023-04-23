@@ -55,5 +55,20 @@ inv_cdf_gaussian( double y, double* params )
   return sigma*sqrt(2)*boost::math::erf_inv(arg_erf_inv) + mu;
 }
 
-
-
+// -----------------------------------------------------------------------------
+// Maxwell-Boltzman CDF
+// -----------------------------------------------------------------------------
+double 
+cdf_maxwell_boltzmann( double y, double* params ) 
+// -----------------------------------------------------------------------------
+{ 
+  double a = params[0];
+  double first_term = boost::math::erf(y / ((sqrt(2)*a)));
+  double num = sqrt(2.) * y * exp(-(y*y)/(2*a*a));
+  printf("num %lf\n", num);
+  double den = sqrt(M_PI) * a;
+  printf("den %lf\n", den);
+  double ret = first_term - num / den;
+  printf("ret %lf\n", ret);
+  return ret;
+}
