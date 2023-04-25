@@ -16,22 +16,24 @@ naive_trial_1D( double (*function)(double, double*),
 		Points2D* opt_points )
 //------------------------------------------------------------------------------
 {
+  // generate x and y values
+  // Q: why sample x, y from U([0, dim])? I would not assume x, y=f(x) distributed similarly. 
   double dim = (range_f-range_i);
   double x = dim*rand()/RAND_MAX;
   double y = dim*rand()/RAND_MAX;
 
+  // optionally prepare to return points
   if( opt_points != NULL ) { 
     opt_points->x = x;
     opt_points->y = y;
   }
 
+  // check if inside
   if( y <= function( x, params ) )
     return 1;
   return 0;
 
 }
-
-
 
 //------------------------------------------------------------------------------
 //
@@ -47,6 +49,7 @@ integrate_1D_Naive( double (*function)(double, double*),
 //------------------------------------------------------------------------------
 {
 
+  // Many trials to check if inside
   unsigned long ninside=0;
   for( int i=0; i<ntrials; i++ ) {
 
@@ -61,7 +64,24 @@ integrate_1D_Naive( double (*function)(double, double*),
     ninside += inside;
   } // trials
 
+  // compute inside / total fraction
   return (double)ninside/ntrials;
+}
+
+unsigned naive_trial_2D(double (*function)(double, double, double*),
+                        double* params, double r_range_i, double r_range_f,
+                        double theta_range_i, double theta_range_f,
+                        Points3D* opt_points) {
+  // todo: complete
+  return 0;
+}
+
+double integrate_2D_Naive(double (*function)(double, double, double*),
+                          double* params, double r_range_i, double r_range_f,
+                          double theta_range_i, double theta_range_f,
+                          unsigned long ntrials, Points3D* opt_points) {
+  // TODO: complete
+  return 0;
 }
 
 //------------------------------------------------------------------------------
