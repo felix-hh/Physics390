@@ -1,5 +1,5 @@
 CPP = g++
-CPPFLAGS = -O2 -g -Iinclude
+CPPFLAGS = -O2 -g -Iinclude 
 
 all : lib test
 

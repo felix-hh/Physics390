@@ -93,17 +93,33 @@ pdf_gamma( double x, double* params )
   return val;
 }
 
+// // -----------------------------------------------------------------------------
+// // Maxwell-Boltzman PDF (My implementation)
+// // -----------------------------------------------------------------------------
+// double 
+// pdf_maxwell_boltzmann( double y, double* params ) 
+// // -----------------------------------------------------------------------------
+// { 
+//   double a = params[0];
+//   double ct = sqrt((double)2 / M_PI);
+//   double exp_term = exp(-(y * y) / (2 * a * a));
+//   double den = a * a * a;
+//   double ret = ct * y * y * exp_term / den;
+//   return ret;
+// }
+
 // -----------------------------------------------------------------------------
-// Maxwell-Boltzman PDF
+// maxwell-boltzmann PDF
 // -----------------------------------------------------------------------------
 double 
-pdf_maxwell_boltzmann( double y, double* params ) 
+pdf_maxwell_boltzmann( double x, double* params ) 
 // -----------------------------------------------------------------------------
 { 
-  double a = params[0];
-  double ct = sqrt((double)2 / M_PI);
-  double exp_term = exp(-(y * y) / (2 * a * a));
-  double den = a * a * a;
-  double ret = ct * y * y * exp_term / den;
-  return ret;
+  if( x<=0 ) return 0.;
+  double a      = params[0];
+  double exparg = -x*x/(2.*a*a);
+  double frac   = x*x*exp(exparg)/pow(a,3.);
+  double val    = sqrt(2./M_PI)*frac;
+  return val;
 }
+
