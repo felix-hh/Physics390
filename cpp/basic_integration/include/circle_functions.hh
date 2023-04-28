@@ -13,6 +13,9 @@ circular_arc_2D( double x, double* params)
 //------------------------------------------------------------------------------
 {
   double R = params[0];
+  if (x > R){
+    return 0.;
+  }
   return sqrt( R*R - x*x);
 };
 
