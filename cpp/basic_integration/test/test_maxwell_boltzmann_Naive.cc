@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "integration_MeanVariance.hh"
+#include "integration_Naive.hh"
 #include "probability.hh"
 
 
@@ -32,14 +32,15 @@ main(int argc, char** argv )
 
   double range_i = 0.;
   double range_f = 20.;
-  double V =  range_f - range_i;
+  double dim = range_f - range_i;
+  double V = dim*dim;
 
-  MeanVarianceResults results; 
   for(int i=0; i<ntrials; i++ ) {
 
-
-    results  = integrate_1D_MeanVariance(&pdf_maxwell_boltzmann, (double*)&params, range_i, range_f, nevents );
-    fprintf( stderr, "i: %d\tintegral: %lf\terror: %lf\tNevents: %lu\n", 
-	     i, results.integral, results.error, nevents);
+    double result  = integrate_1D_Naive(&pdf_maxwell_boltzmann, (double*)&params, range_i, range_f, nevents );
+    double ninside = nevents*(result/V);
+    double error   = V*binomial_error(nevents, ninside);
+    fprintf( stderr, "i: %d integral: %lf error: %lf Nevents: %lu\n", 
+	     i, result, error, nevents);
   }
 }
