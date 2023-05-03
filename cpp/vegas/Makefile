@@ -1,6 +1,6 @@
 
 # set to vegas_kh to use mine///
-WHICH_VEGAS_LIB = vegas_kh # vegas
+WHICH_VEGAS_LIB = vegas
 
 CPP = g++
 CPPFLAGS = -O2 -g -std=c++0x -DFIXED_ITERATIONS  -I../probability/include -Iinclude

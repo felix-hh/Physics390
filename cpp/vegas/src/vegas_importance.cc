@@ -83,6 +83,38 @@ Jy( double y, vector<VegasBin> &xvec, int Ng )
 
 
 
+void normalize_d( vector<double> &dvec, vector<int> &nvec ){
+  // Divide everything by d_sum
+    double d_sum = 0.0;
+    for (int i = 0; i < dvec.size(); i++) {
+        d_sum += dvec[i];
+    }
+
+    for (int i = 0; i < dvec.size(); i++) {
+        dvec[i] /= d_sum;
+    }
+}
+
+void smooth( vector<double> &dvec ){
+    vector<double> d2(dvec.size());
+
+    d2[0] = (7 * dvec[0] + dvec[1]) / 8;
+    for (int i = 1; i < dvec.size() - 1; i++) {
+        d2[i] = (dvec[i - 1] + 6 * dvec[i] + dvec[i + 1]) / 8;
+    }
+    int last = dvec.size() - 1;
+    d2[last] = (dvec[last - 1] + 7 * dvec[last]) / 8;
+
+    dvec = d2;
+}
+
+void compress( vector<double> &dvec, double alpha ){
+    for (double &di : dvec) {
+        di = pow((1.0 - di)/ log(1.0 /di), alpha);
+    }
+}
+
+
 // -----------------------------------------------------------------------------
 //
 //
